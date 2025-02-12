@@ -1,0 +1,45 @@
+{% schema %}
+{
+  "name": "Store Hours App Embed",
+  "target": "body",
+  "settings": [
+    {
+      "type": "text",
+      "id": "open_time",
+      "label": "Open Time",
+      "default": "09:00"
+    },
+    {
+      "type": "text",
+      "id": "close_time",
+      "label": "Close Time",
+      "default": "21:00"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  const openTime = "{{ section.settings.open_time }}";
+  const closeTime = "{{ section.settings.close_time }}";
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const [openHour] = openTime.split(':').map(Number);
+    const [closeHour] = closeTime.split(':').map(Number);
+
+    if (currentHour < openHour || currentHour >= closeHour) {
+      const addToCartButton = document.querySelector('[name="add"]');
+      if (addToCartButton) {
+        addToCartButton.disabled = true;
+        addToCartButton.innerText = "Store is Closed";
+      }
+      const checkoutButton = document.querySelector('[name=""]');
+        if (checkoutButton) {
+            checkoutButton.disabled = true;
+            checkoutButton.innerText = "Store is Closed";
+        }
+    }
+  });
+</script>
